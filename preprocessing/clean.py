@@ -20,6 +20,9 @@ def clean():
 
     # make a lowpass filtering of the sensor columns
     sensory_columns = [col for col in df.columns if col.startswith(tuple(sensors))]
+
+    # set the location to the last recorded location
+    df['location'] = df['location'].fillna(method='ffill')
     df = lowpass_filter(df, sensory_columns)
 
     df.to_csv("data/cleaned/clean.csv")
